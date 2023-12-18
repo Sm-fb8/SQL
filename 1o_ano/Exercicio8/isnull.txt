@@ -1,0 +1,10 @@
+Atividade 1:
+SELECT * FROM Clientes WHERE email LIKE "%gmail%" OR first_name = "John";
+
+
+Atividade 2:
+SELECT * FROM Clientes WHERE gender = "Female" AND last_name = "Johnson";
+
+
+Atividade 3:
+SELECT * FROM Clientes WHERE ip_address IS NULL;

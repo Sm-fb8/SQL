@@ -1,0 +1,1 @@
+SELECT Produtos.NomeProduto, Produtos.Preco, Fornecedores.NomeFornecedor FROM Produtos INNER JOIN Fornecedores ON Produtos.IDFornecedor = Fornecedores.IDFornecedor;

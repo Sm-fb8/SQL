@@ -1,0 +1,16 @@
+1ª atividade: 
+
+SELECT * FROM Clientes WHERE gender = 'Male' ORDER BY first_name ASC;
+
+2ª atividade:
+
+SELECT * FROM Clientes WHERE gender = 'Female' OR (last_name = 'Smith' AND email LIKE '%gmail%');
+
+3ª atividade:
+
+SELECT * FROM Clientes WHERE ip_address LIKE '192.168%';
+
+
+
+
+

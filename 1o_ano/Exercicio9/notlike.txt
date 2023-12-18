@@ -1,0 +1,5 @@
+Atividade 1:
+SELECT * FROM Clientes WHERE (id > 50 AND id < 100) OR last_name = "Smith";
+
+Atividade 2:
+SELECT * FROM Clientes WHERE email NOT LIKE "%hotmail.com";
