@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Pokemon</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="campoBuscarPokemon" placeholder="Nome do Pokemon">
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-primary" id="botaoBuscarPokemon">Buscar</button>
+            </div>
+        </div>
+        <table id="tablePokemon" class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                    <th>#ID</th>
+                    <th>Nome Pokemon</th>
+                    <th>Tipos</th>
+                    <th>Altura</th>
+                    <th>Peso</th>
+                    <th>Habilidades</th>
+                    <th>Figura</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script>
+        var tabelaPokemon = document.getElementById("tablePokemon");
+        var ids_Pokemon = [];
+        var botaoBuscarPokemon = document.getElementById("botaoBuscarPokemon").addEventListener("click", buscarPokemon);
+        var caixaPesquisarPokemon = document.getElementById("campoBuscarPokemon");
+
+
+        function buscarPokemon() {
+            if (caixaPesquisarPokemon.value === "") {
+                alert("Preencha o campo!");
+                return;
+            }
+
+            const apiUrl = "https://pokeapi.co/api/v2/pokemon/" + caixaPesquisarPokemon.value.toLowerCase();
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    var jaExistePokemon = false;
+
+                    ids_Pokemon.forEach(element => {
+                        if (element === data.id) {
+                            jaExistePokemon = true;
+                            alert("Pokemon já cadastrado");
+                        }
+                    });
+
+                    if (!jaExistePokemon) {
+                        lista(data);
+                        ids_Pokemon.push(data.id);
+                    }
+                })
+                .catch(error => {
+                    alert("Erro ao obter as informações do Pokemon!" + error);
+                });
+        }
+
+        function lista(data) {
+            var novoRegistroPokemon = document.createElement("tr");
+
+            var id = document.createElement("td");
+            var nome = document.createElement("td");
+            var tipo = document.createElement("td");
+            var altura = document.createElement("td");
+            var peso = document.createElement("td");
+            var habilidade = document.createElement("td");
+            var imagem = document.createElement("td");
+            var novaImagem = document.createElement("img");
+            novaImagem.src = data.sprites.front_default;
+
+            id.textContent = data.id;
+            nome.textContent = data.name;
+            tipo.textContent = data.types.map(type => type.type.name).join(", ");
+            altura.textContent = data.height;
+            peso.textContent = data.weight;
+            habilidade.textContent = data.abilities.map(ability => ability.ability.name).join(", ");
+            novaImagem.src = data.sprites.front_default; 
+
+            novoRegistroPokemon.appendChild(id);
+            novoRegistroPokemon.appendChild(nome);
+            novoRegistroPokemon.appendChild(tipo);
+            novoRegistroPokemon.appendChild(altura);
+            novoRegistroPokemon.appendChild(peso);
+            novoRegistroPokemon.appendChild(habilidade);
+            imagem.appendChild(novaImagem);
+            novoRegistroPokemon.appendChild(imagem);
+
+            tabelaPokemon.appendChild(novoRegistroPokemon);
+        }
+    </script>
+
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .tabelaPokemon{
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #tabelaPokemon th, 
+        #tabelaPokemon td{
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd; 
+        }
+
+        #tabelaPokemon th{
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        #imagem img{
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 5px;
+        }
+    </style>
+</body>
+</html>

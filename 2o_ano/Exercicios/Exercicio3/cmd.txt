@@ -1,0 +1,23 @@
+CREATE DATABASE aleatorio;
+USE aleatorio;
+CREATE TABLE clientes(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	nome VARCHAR(255),
+	email VARCHAR(255),
+	telefone VARCHAR(20)
+);
+CREATE TABLE cidades(
+	id INT PRIMARY KEY AUTO_INCREMENT
+);
+
+ALTER TABLE clientes ADD COLUMN cidade VARCHAR(255) NOT NULL;
+ALTER TABLE clientes MODIFY COLUMN telefone INT NOT NULL;
+ALTER TABLE clientes DROP COLUMN email;
+ALTER TABLE clientes RENAME COLUMN nome TO nome_completo;
+ALTER TABLE clientes ADD COLUMN id_cidade INT NOT NULL;
+ALTER TABLE clientes ADD CONSTRAINT id_cidade FOREIGN KEY (id_cidade) REFERENCES cidades (id);
+CREATE INDEX cliente_nome ON clientes (nome_completo);
+ALTER TABLE clientes ADD COLUMN data_nascimento DATE NOT NULL;
+ALTER TABLE clientes ADD CONSTRAINT data_nasc_check CHECK (data_nascimento = '1980-01-01');
+ALTER TABLE clientes MODIFY COLUMN telefone INT;
+	
